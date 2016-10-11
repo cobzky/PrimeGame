@@ -1,6 +1,7 @@
 import random
 
-
+score = 0
+ran = 500
 primelist = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149,
 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229,
@@ -37,22 +38,31 @@ def finddivisors(number):
 
 
 #print set(finddivisors(812))
-def test(integer,factors,saidfactors):
+def test(integer,factors,saidfactors,attempts):
+    if attempts>9:
+        print "Sorry, to many attempts. The factors were:"
+        print str(factors)
+        main()
     factor = input("What are the prime factors of "+str(integer)+"? ")
     if factor not in factors:# and factor not in saidfactors:
         print "Nope, that is not a prime factor sorry!"
-        test(integer,factors,saidfactors)
+        print ""
+        attempts+=1
+        test(integer,factors,saidfactors,attempts)
     if factor in saidfactors:
         print "Sorry, you said that already"
-        test(integer,factors,saidfactors)
+        print ""
+        test(integer,factors,saidfactors,attempts)
     else:
         saidfactors.append(factor)
         print "Yeap, that is a factor!"
+        print ""
         if set(factors) == set(saidfactors):
             print "You got all the factors. Congratulations! The factors are " + str(factors)
+            print ""
             main()
         else:
-            test(integer,factors,saidfactors)
+            test(integer,factors,saidfactors,attempts)
 
 def list_primes():
     k=0
@@ -72,13 +82,14 @@ def list_primes():
     list_primes()
 
 def main():
-    integer = random.randrange(0,100)
+    integer = random.randrange(0,ran)
     factors = set(finddivisors(integer))
-    test(integer,factors,[])
+    test(integer,factors,[],0)
 
 def game_play():
     game = input("What game do you want? Factors (1) or Primelist (2) ")
     if game == 1:
+        ran = input("Up to what number? ")
         main()
     if game == 2:
         list_primes()
