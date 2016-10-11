@@ -54,11 +54,36 @@ def test(integer,factors,saidfactors):
         else:
             test(integer,factors,saidfactors)
 
+def list_primes():
+    k=0
+    wrong = False
+    while wrong == False:
+        guess = input("What prime comes next? ")
+        if(guess == primelist[k]):
+            guesses = primelist[0:(k+1)]
+            k += 1
+            print "That is correct, the first "+str(k)+" primes are "
+            print str(guesses)+"."
+            print ""
 
+        else:
+            wrong = True
+    print "Ooops, that is not the next prime, the next prime was " + str(primelist[k])
+    list_primes()
 
 def main():
     integer = random.randrange(0,100)
     factors = set(finddivisors(integer))
     test(integer,factors,[])
 
-main()
+def game_play():
+    game = input("What game do you want? Factors (1) or Primelist (2) ")
+    if game == 1:
+        main()
+    if game == 2:
+        list_primes()
+    else:
+        print "Must enter valid game."
+        game_play()
+
+game_play()
